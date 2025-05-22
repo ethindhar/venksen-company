@@ -19,12 +19,12 @@ const transporter = nodemailer.createTransport({
 });
 
 // CORS Configuration - Updated to be more permissive during development
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://main.dxw6md2go3m1n.amplifyapp.com', // Amplify domain
-  'https://vensken.com',
-  'https://www.vensken.com'
-];
+// const allowedOrigins = [
+//   'http://localhost:3000',
+//   'https://main.dxw6md2go3m1n.amplifyapp.com', // Amplify domain
+//   'https://vensken.com',
+//   'https://www.vensken.com'
+// ];
 
 // Enhanced CORS middleware
 // app.use(cors({
@@ -39,22 +39,44 @@ const allowedOrigins = [
 //   credentials: false // Change this to false if you don't need cookies
 // }));
 
-app.use(cors({
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin (e.g., curl, mobile apps)
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     } else {
+//       return callback(new Error('CORS policy does not allow this origin'));
+//     }
+//   },
+//   methods: ['GET', 'POST', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true // only if you need cookies or auth headers
+// }));
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://main.dxw6md2go3m1n.amplifyapp.com',
+  'https://vensken.com',
+  'https://www.vensken.com'
+];
+const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (e.g., curl, mobile apps)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      return callback(new Error('CORS policy does not allow this origin'));
+      callback(new Error('Not allowed by CORS'));
     }
   },
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // only if you need cookies or auth headers
-}));
-// app.use(cors(corsOption));
-// app.options('*', cors(corsOption))
+  optionsSuccessStatus: 200 // <- VERY IMPORTANT for CORS to work
+};
+app.use(cors(corsOptions));
+// This handles preflight OPTIONS request explicitly
+app.options('*', cors(corsOptions), (req, res) => {
+  res.sendStatus(200);
+});
 
 // Handle OPTIONS preflight requests
 app.options('*', cors());
