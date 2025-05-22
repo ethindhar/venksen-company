@@ -1,0 +1,23 @@
+.lang-btn {
+  padding: 8px 16px;
+  border: 2px solid #007bff;
+  border-radius: 20px;
+  background: transparent;
+  color: #007bff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 10px;
+}
+
+.lang-btn:hover {
+  background: #007bff;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .lang-btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+} 
