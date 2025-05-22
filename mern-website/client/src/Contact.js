@@ -57,7 +57,11 @@ const Contact = () => {
     e.preventDefault();
     try {
       console.log('Sending to backend URL:', process.env.REACT_APP_API_URL);
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/contact`, form);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/contact`, form,({
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }));
       console.log('Response from backend:', response);
       if (response.data.success) {
         setStatus(t.status.success);
