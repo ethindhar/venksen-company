@@ -21,22 +21,37 @@ const transporter = nodemailer.createTransport({
 // CORS Configuration - Updated to be more permissive during development
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://main.dxw6md2go3m1n.amplifyapp.com', // Add your Amplify domain
+  'https://main.dxw6md2go3m1n.amplifyapp.com', // Amplify domain
   'https://vensken.com',
   'https://www.vensken.com'
 ];
 
 // Enhanced CORS middleware
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     // allow requests with no origin (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
+//     }
+//     return callback(null, true);
+//   },
+//   credentials: false // Change this to false if you don't need cookies
+// }));
+
 app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
+  origin: function (origin, callback) {
+    // Allow requests with no origin (e.g., curl, mobile apps)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('CORS policy does not allow this origin'));
     }
-    return callback(null, true);
   },
-  credentials: false // Change this to false
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // only if you need cookies or auth headers
 }));
 
 // Handle OPTIONS preflight requests
