@@ -53,11 +53,11 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true // only if you need cookies or auth headers
 }));
-app.use(cors(corsOption));
-app.options('*', cors(corsOption))
+// app.use(cors(corsOption));
+// app.options('*', cors(corsOption))
 
 // Handle OPTIONS preflight requests
-// app.options('*', cors());
+app.options('*', cors());
 
 app.use(express.json());
 
