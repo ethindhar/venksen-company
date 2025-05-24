@@ -82,10 +82,28 @@ npm start
 
 ## 📦 Deployment
 
-The application is deployed on AWS:
+The application is deployed using a hybrid cloud approach:
 - Frontend: AWS Amplify
-- Backend: AWS EC2
-- CI/CD: Configured via amplify.yml
+  - Production URL: [https://main.dxw6md2go3m1n.amplifyapp.com](https://main.dxw6md2go3m1n.amplifyapp.com)
+  - Custom Domain: [https://vensken.com](https://vensken.com) and [https://www.vensken.com](https://www.vensken.com)
+- Backend: Render
+  - Web Service: [https://venksen-backend.onrender.com](https://venksen-backend.onrender.com)
+  - Automatic deployments from GitHub
+  - Free tier with automatic sleep after inactivity
+- CI/CD: 
+  - Frontend: Configured via amplify.yml
+  - Backend: Automatic deployments on Render
+  - Environment-specific deployments (development/production)
+
+### Deployment Architecture
+```
+Client (AWS Amplify) → Render Web Service → MongoDB Atlas
+```
+
+### Environment URLs
+- Production Frontend: [https://vensken.com](https://vensken.com)
+- Production Backend: [https://venksen-backend.onrender.com](https://venksen-backend.onrender.com)
+- API Documentation: [https://venksen-backend.onrender.com/api-docs](https://venksen-backend.onrender.com/api-docs)
 
 ## 🔒 Security Features
 
