@@ -57,8 +57,9 @@ const transporter = nodemailer.createTransport({
 const allowedOrigins = [
   'http://localhost:3000',
   'https://main.dxw6md2go3m1n.amplifyapp.com',
-  'https://vensken.com',
-  'https://www.vensken.com'
+  'https://venksen.com',
+  'https://www.venksen.com'
+  
 ];
 const corsOptions = {
   origin: function (origin, callback) {
